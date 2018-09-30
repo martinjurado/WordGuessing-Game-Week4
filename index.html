@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stranger things hangman</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <!-- Font Used -->
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <!-- Separate CSS File below -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/CSS/style.css" />
+
+</head>
+
+<body>
+
+<!-- Carousel  -->
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="assets/images/st1.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="mainheader">The Hangman Game</h5>
+              <p>Escape the upside down!</p>
+            </div>
+          </div>
+      </div>
+  </div>
+<!-- End of Carousel -->
+
+        <!-- Html Content -->
+
+        <div class="firstsection">
+
+            <img src="assets/images/upsidedown.gif" alt="happykids" class="group">
+
+            <div id="directions">Defeat the Demogorgon and escape the upsidedown!</p>
+                <p id="questionheading" class="guesstheword">Press any key to start:</p>
+                <div id="blanksection"></div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <h3>Letters Guessed:</h3>
+                        <div id="wrong-guessed">--</div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Guesses Left:</h3>
+                        <div id="lifecount">--</div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Number of Wins:</h3>
+                        <div id="wins"></div>
+                    </div>
+                    <div class="col-md-6 pb-40px">
+                        <h3>Number of Loses:</h3>
+                        <div id="loses"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of html content -->
+
+            <!-- Audio Files -->
+
+            <audio id="creepy" src="assets/sounds/StrangerThings.mp3"></audio>
+            <audio id="pacman" src="assets/sounds/pacman_death.wav"></audio>
+            <audio id="loser" src="assets/sounds/bump.wav"></audio>
+            <audio id="youwin" src="assets/sounds/winner.wav"></audio>
+            <audio id="correct" src="assets/sounds/powerup.wav"></audio>
+
+        </div>
+
+        <script type="text/javascript" src="assets/JavaScript/game.js">
+
+        </script>
+</body>
+
+</html>
