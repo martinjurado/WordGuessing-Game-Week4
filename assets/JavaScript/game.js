@@ -1,96 +1,142 @@
-// Global variables 
-var wins = 0;
-var loses = 0;
-var lives = 10;
-var correctGuess = [];
-var wrongGuess = [];
-
-// first phase of the game
-document.getElementById("wins").innerHTML = wins;
-document.getElementById("loses").innerHTML = loses;
-document.getElementById("lifecount").innerHTML = lives;
-
 // Cast list
 var cast = ["eleven", "mike", "dustin", "lucas", "will", "madmax", "steve", "nancy", "demogorgon"];
 
-// Alphabet 
-var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var chosenWord = ""; // solution stored in here
+var lettersInChosenWord = []; // break the solution into individual letters
+var numBlanks = 0; // number of blanks we show based on solution
+var blanksAndSuccesses = []; // Holds a mix of blank and solved letters (ex: 'n, _ _, n, _').
+var wrongGuesses = []; // Holds all wrong guesses
 
-var randomizeCast = cast[Math.floor(Math.random() * cast.length)]; // word to guess 
-console.log(randomizeCast); // test log 
+// Counters 
+var wins = 0;
+var losses = 0;
+var lives = 10;
 
-// Print the random word in the screen 
-function randomize() {
 
-    var putWord = "";
+// Function Start/Restart Game
 
-    document.getElementById("blanksection").innerHTML = putWord; // the blank section to put the correct words 
+function startGame() {
 
-    for (i = 0; i < randomizeCast.length; i++) {
+    lives = 10;
 
-        if (correctGuess.indexOf(randomizeCast[i]) > -1) {
+    //randomize chosen word to guess
+    chosenWord = cast[Math.floor(Math.random() * cast.length)];
 
-            putWord += " " + randomizeCast[i]; + " "
-        }
-        else {
+    console.log (chosenWord); //test
 
-            putWord += " _ "
+    // words broken into individual letters
+    lettersInChosenWord = chosenWord.split("");
 
-        }
+    console.log(lettersInChosenWord); //test
+
+    // number of blanks for the word
+    numBlanks = lettersInChosenWord.length;
+
+    console.log(numBlanks); //test
+
+    // Reset the number of blanks/successes
+    blanksAndSuccesses = [];
+
+    // Reset the number of wrong guesses
+    wrongGuesses = [];
+
+    // Filling up the number of blanks 
+    for(var i = 0; i < numBlanks; i++){
+        blanksAndSuccesses.push("_");
     }
-    document.getElementById("blanksection").innerHTML = putWord;
+
+    console.log(blanksAndSuccesses); // test log
+
+    // Shows the number of lives left to 10
+    document.getElementById("lifecount").innerHTML = lives;
+
+    // print blanks at the beginning of each round
+    document.getElementById("blanksection").innerHTML = blanksAndSuccesses.join(" ");
+
+    //clear wrong guesses from previous round
+    document.getElementById("wrong-guessed").innerHTML = wrongGuesses.join(" ");
+
 }
 
+function checkLetters(letter) {
 
+    var letterInWord = false;
 
-// On key press event to put the right guessed letter 
-document.onkeypress = function press(event) {
-
-    if (randomizeCast.indexOf(event.key) > -1) {
-
-        correctGuess.push(event.key);
-        document.getElementById("correct").play(); // plays a sound when u hit correct letter
-        document.getElementById("creepy").play(); // plays stranger things theme song 
-
+    //check if letter exists inside the array
+    for( var i = 0; i < numBlanks; i++) {
+        
+        if(chosenWord[i] === letter) {
+            
+            //if letter exists, toggle this boolean to true
+            letterInWord = true;
+        }
     }
+    // if the letter exists somewhere in the word, then figure out exactly where
+    if (letterInWord) {
 
-    randomize();
-    // wrong guess
-    if (randomizeCast.indexOf(event.key) === -1) {
+        // loop through word
+        for( var j = 0; j < numBlanks; j++){
+
+        // Populate the blanksAndSuccessed with every instance of the letter
+        if (chosenWord[j] === letter) {
+        
+            //here we set the specific space in blanks and letter equal to the letter when there is a match
+            blanksAndSuccesses[j] = letter;
+        }
+    }
+    
+    console.log(blanksAndSuccesses); // test log
+} 
+
+    // if the letter doesn't exist at all
+    else {
+        wrongGuesses.push(letter);
         lives--;
-        wrongGuess.push(event.key);
-        document.getElementById("lifecount").innerHTML = lives;
-        document.getElementById("wrong-guessed").innerHTML = wrongGuess;
-        document.getElementById("loser").play();
-    }
-    // lose
-    if (lives <= 0) {
-
-        loses++;
-        lives = 10;
-        document.getElementById("loses").innerHTML = loses;
-        document.getElementById("lifecount").innerHTML = lives;
-        alert("You have just been sucked in the upside down!" + " The correct answer is " + randomizeCast);
-        correctGuess.splice(0, correctGuess.length);
-        wrongGuess.splice(0, wrongGuess.length);
-        document.getElementById("pacman").play(); // plays a sound when you lose 
-
-    }
-    // wins 
-    if (correctGuess === randomizeCast.indexOf(event.key)) {
-        randomize();
-        wins++;
-        document.getElementById("wins").innerHTML = wins;
-        alert("Congratulations! You defeated the demogorgon and escaped the upside down!");
-        correctGuess.splice(0, correctGuess.length);
-        wrongGuess.splice(0, wrongGuess.length);
-
     }
 }
 
 
+function roundComplete() {
 
+    console.log("Wins: " + wins + "| Losses: " + losses + "| Lives: " + lives);
+    document.getElementById("lifecount").innerHTML = lives;
+    document.getElementById("blanksection").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("wrong-guessed").innerHTML = wrongGuesses.join(" ");
 
+    // if user guessed all the letters to match the word
+    if(lettersInChosenWord.toString() === blanksAndSuccesses.toString()) {
+        wins++
+        alert("Yay you escaped the upside down");
 
+        // update win counter
+        document.getElementById("wins").innerHTML = wins;
+        startGame(); // restart 
+    }
 
+    //if user ran out of lives
+
+    else if (lives === 0) {
+        losses++;
+
+        alert("Boo you loss. The Demogorgon ate you");
+
+        // update loss counter
+        document.getElementById("loses").innerHTML = losses;
+        startGame(); // restart
+    }
+}
+
+// Main Process
+
+startGame();
+
+document.onkeyup = function(event) {
+    
+    // converts user input to lower case text
+    var lettersGuessed = String.fromCharCode(event.which).toLowerCase();
+
+    checkLetters(lettersGuessed);
+
+    roundComplete();
+}
 
