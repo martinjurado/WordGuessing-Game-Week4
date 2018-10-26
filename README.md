@@ -1,2 +1,6 @@
 # WordGuessingGame
-Stranger Things-themed hangman. Guess the word or be doomed in the upside down. Made with HTML, CSS, JavaScript. Incomplete without the win function. 
+Stranger Things-themed hangman. Guess the word or be doomed in the upside down. 
+- Technologies Used
+- HTML/CSS
+- JavaScript
+- Link to game (https://martinjurado.github.io/WordGuessingGame/)
