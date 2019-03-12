@@ -1,4 +1,4 @@
-# WordGuessingGame
+# Word Guessing Game
 Stranger Things-themed hangman. Guess the word or be doomed in the upside down. 
 ## Overview
 This application requires user to guess the name of the character with limited lives. Clues for the word are also included. The application also radomly picks words for the user. 
