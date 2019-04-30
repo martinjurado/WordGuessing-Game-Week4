@@ -7,4 +7,4 @@ This application requires user to guess the name of the character with limited l
 - JavaScript
 - Bootstrap.css
 ## Link
-Link to game (https://martinjurado.github.io/WordGuessingGame/)
+Link to game (https://martinjurado.github.io/WordGuessing-Game-Week4/)
